@@ -5,11 +5,11 @@
 #include "mruby/error.h"
 
 mrb_value mrb_p_getpgid(mrb_state *mrb, mrb_value self) {
-    mrb_value pid;
+    mrb_int pid;
     pid_t pgid;
 
     mrb_get_args(mrb, "i", &pid);
-    pgid = getpgid((pid_t)mrb_fixnum(pid));
+    pgid = getpgid((pid_t)pid);
 
     if (pgid == -1) {
         mrb_sys_fail(mrb, "getpgid");
@@ -19,10 +19,10 @@ mrb_value mrb_p_getpgid(mrb_state *mrb, mrb_value self) {
 }
 
 mrb_value mrb_p_setpgid(mrb_state *mrb, mrb_value self) {
-    mrb_value pid, pgid;
+    mrb_int pid, pgid;
 
     mrb_get_args(mrb, "ii", &pid, &pgid);
-    if (setpgid((pid_t)mrb_fixnum(pid), (pid_t)mrb_fixnum(pgid)) == -1 ) {
+    if (setpgid((pid_t)pid, (pid_t)pgid) == -1 ) {
         mrb_sys_fail(mrb, "setpgid");
     }
 
